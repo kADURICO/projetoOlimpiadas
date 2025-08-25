@@ -1,0 +1,63 @@
+package com.senac.projeto2.controller;
+
+import com.senac.projeto2.entity.Usuario;
+import com.senac.projeto2.service.UsuarioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("api/usuario")
+@Tag(name = "Usuario", description = "API para gerenciamento dos usuarios do sistema")
+public class UsuarioController {
+
+    private final UsuarioService usuarioService;
+
+    public UsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
+
+    @GetMapping("/listar")
+    @Operation(summary = "Listar usuarios do sistema")
+    public ResponseEntity<List<Usuario>> listar() {
+        return ResponseEntity.ok(usuarioService.listarUsuarios());
+    }
+
+    @GetMapping("/listarPorIdUsuario/{idUsuario}")
+    @Operation(summary = "Listar usuarios do sistema pelo id do usuario")
+    public ResponseEntity<Usuario> listarPorIdUsuario(@PathVariable("idUsuario") Integer idUsuario) {
+        return ResponseEntity.ok(usuarioService.listarUsuarioPorId(idUsuario));
+    }
+
+    @PostMapping("/criar")
+    public String criar() {
+        return "Usuario criado com sucesso";
+    }
+
+    @PutMapping("/atualizar")
+    @Operation(summary = "Atualizar usuarios do sistema")
+    public String atualizar() {
+        return "Usuario atualzado com sucesso";
+    }
+
+    @PutMapping("/atualizarPorIdUsuario/{idUsuario}")
+    @Operation(summary = "Atualizar usuarios do sistema pelo id do usuario")
+    public String atualizarPorIdUsuario(@PathVariable("idUsuario") Integer idUsuario) {
+        return "Usuario por id " + idUsuario + "atualzado com sucesso";
+    }
+
+    @DeleteMapping("/apagar")
+    @Operation(summary = "Apagar usuarios do sistema")
+    public String apagar() {
+        return "Usuario apagado com sucesso";
+    }
+
+    @DeleteMapping("/apagarPorIdUsuario/{idUsuario}")
+    @Operation(summary = "Apagar usuarios do sistema pelo id do usuario")
+    public String apagarPorIdUsuario(@PathVariable("idUsuario") Integer idUsuario) {
+        return "Usuario por id " + idUsuario + " apagado com sucesso";
+    }
+}
