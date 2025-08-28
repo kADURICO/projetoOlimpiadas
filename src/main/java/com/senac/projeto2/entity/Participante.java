@@ -1,8 +1,10 @@
 package com.senac.projeto2.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.File;
+import java.util.List;
 
 @Entity
 @Table(name = "participante")
@@ -23,6 +25,10 @@ public class Participante {
     private File fotoPerfil;
     @Column(name = "participante_status", nullable = false)
     private int status;
+
+    @OneToMany(mappedBy = "participante")
+    private List<Inscricao> inscricoes;
+
 
     public int getId() {
         return id;

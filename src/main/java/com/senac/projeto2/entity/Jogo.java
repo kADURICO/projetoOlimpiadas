@@ -1,23 +1,31 @@
 package com.senac.projeto2.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
-@Table(name = "categoria")
-public class Categoria {
+@Table(name = "jogo")
+public class Jogo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "categoria_id")
+    @Column(name = "jogo_id")
     private int id;
-    @Column(name = "categoria_nome", nullable = false, length = 30)
+
+    @Column(name = "jogo_nome", nullable = false, length = 30)
     private String nome;
-    @Column(name = "categoria_status", nullable = false)
+
+    @Column(name = "jogo_status", nullable = false)
     private int status;
 
-    @OneToMany(mappedBy = "categoria")
-    private List<Jogo> jogos;
+    @ManyToOne
+    @JoinColumn(name = "categoria_id", nullable = false)
+    @JsonIgnore
+    private Categoria categoria;
+
+    @OneToMany(mappedBy = "jogo")
+    private List<Inscricao> inscricoes;
 
     public int getId() {
         return id;
